@@ -10,5 +10,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+      - name: Pull browser in docker
+        run: docker pull selenoid/chrome:128.0
       - name: Run tests in docker
         run: docker compose up --build --exit-code-from test
