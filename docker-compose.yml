@@ -2,6 +2,15 @@ version: '3.5'
 
 services:
 
+  pull-browsers:
+    image: docker:cli
+    container_name: pull-browsers
+    command: [ "docker", "pull", "selenoid/chrome:128.0" ]
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - selenoid
+
   selenoid:
     image: "aerokube/selenoid"
     container_name: selenoid
@@ -40,6 +49,7 @@ services:
       - SELENOID_PORT=4444
     depends_on:
       - selenoid
+      - pull-browsers
     networks:
       - selenoid
     tty: true
