@@ -48,8 +48,10 @@ services:
       - SELENOID_HOST=selenoid
       - SELENOID_PORT=4444
     depends_on:
-      - selenoid
-      - pull-browsers
+      selenoid:
+        condition: service_started
+      pull-browsers:
+        condition: service_completed_successfully
     networks:
       - selenoid
     tty: true
