@@ -23,7 +23,7 @@ class ReceiptPage(BasePage):
         self.click_element(Locators.CREATE_RECEIPT_BUTTON_FORM)
         return self.wait_of_element(Locators.RECEIPT_CARD)
 
-    def check_name_in_cart(self, name):
+    def check_name_in_card(self, name):
         locator_name = self.get_text_by_locator(Locators.RECEIPT_NAME_IN_CARD)
         return name == locator_name
 

@@ -27,4 +27,4 @@ class TestCreateReceipt:
             assert receipt_result
 
         with allure.step("Проверка отображения названия рецепта в карточке"):
-            assert receipt.check_name_in_cart(receipt_payload['name'])
+            assert receipt.check_name_in_card(receipt_payload['name'])
