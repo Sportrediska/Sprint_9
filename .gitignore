@@ -2,5 +2,4 @@
 __pycache__/
 pages/__pycache__/
 tests/__pycache__/
-
-
+.env

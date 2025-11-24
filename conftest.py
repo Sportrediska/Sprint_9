@@ -7,6 +7,8 @@ from pages.register_user_page import RegisterUserPage
 from urls import BASE_URL
 from mimesis import Food
 from mimesis.locales import Locale
+import os
+
 
 @pytest.fixture
 def register_user_method(driver):
@@ -27,6 +29,7 @@ def random_user_payload_for_create():
         'password': fake.password()
     }
 
+
 @pytest.fixture
 def driver():
     options = ChromeOptions()
@@ -34,8 +37,20 @@ def driver():
     options.add_argument("--width=1920")
     options.add_argument("--height=1080")
     options.add_argument("--disable-extensions")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
 
-    driver = webdriver.Chrome(options=options)
+    selenoid_host = os.getenv('SELENOID_HOST')
+    selenoid_port = os.getenv('SELENOID_PORT')
+
+    if selenoid_host and selenoid_port:
+        selenoid_url = f"http://{selenoid_host}:{selenoid_port}/wd/hub"
+        options.set_capability("browserName", "chrome")
+        options.set_capability("browserVersion", "128.0")
+        driver = webdriver.Remote(command_executor=selenoid_url, options=options)
+    else:
+        driver = webdriver.Chrome(options=options)
+
     driver.get(BASE_URL)
 
     yield driver
